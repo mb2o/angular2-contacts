@@ -5,7 +5,7 @@ import { ContactService } from "./contact.service";
 import { Contact } from "./contact";
 
 @Component({
-    template: `
+	template: `
         <h2>My Contacts</h2>
         <ul>
             <li *ngFor="#contact of contacts"
@@ -14,31 +14,32 @@ import { Contact } from "./contact";
                 {{contact.firstName}} {{contact.lastName}}
             </li>
         </ul>
-        <contact [contact]="selectedContact"></contact>
+        <contact *ngIf="selectedContact !== null" 
+                 [contact]="selectedContact"></contact>
     `,
-    directives: [ContactComponent],
-    providers: [ContactService],
-    styleUrls: ['../assets/css/contact-list.css']
+	directives: [ContactComponent],
+	providers: [ContactService],
+	styleUrls: ['../assets/css/contact-list.css']
 })
 export class ContactListComponent {
 
-    public contacts:Contact[];
-    public selectedContact = {};
+	public contacts:Contact[];
+	public selectedContact:Contact = null;
 
-    constructor(private _contactService:ContactService) {
-    }
+	constructor(private _contactService:ContactService) {
+	}
 
-    ngOnInit() {
-        this.getContacts();
-    }
+	ngOnInit() {
+		this.getContacts();
+	}
 
-    onSelect(contact) {
-        this.selectedContact = contact;
-    }
+	onSelect(contact) {
+		this.selectedContact = contact;
+	}
 
-    getContacts() {
-        this._contactService
-            .getContacts()
-            .then((contacts:Contact[]) => this.contacts = contacts);
-    }
+	getContacts() {
+		this._contactService
+			.getContacts()
+			.then((contacts:Contact[]) => this.contacts = contacts);
+	}
 }

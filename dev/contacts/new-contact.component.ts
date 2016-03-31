@@ -1,7 +1,7 @@
-import { Component } from "angular2/core";
+import { Component, OnInit } from "angular2/core";
 import { ContactService } from "./contact.service";
 import { Contact } from "./contact";
-import { Router } from "angular2/router";
+import { Router, RouteParams } from "angular2/router";
 
 @Component({
 	template: `
@@ -12,7 +12,7 @@ import { Router } from "angular2/router";
             </div>
             <div class="prop">
                 <label for="lastName">Last Name</label>
-                <input id="lastName" #lastName> 
+                <input id="lastName" #lastName value="{{ passedLastName }}"> 
             </div>
             <div class="prop">
                 <label for="phone">Phone Number</label>
@@ -30,12 +30,24 @@ import { Router } from "angular2/router";
 })
 export class NewContactComponent {
 
+	public passedLastName: string = "";
+
 	constructor(private _contactService:ContactService,
-				private _router:Router) {
+				private _router:Router,
+				private _routeParams: RouteParams) {
+	}
+
+	ngOnInit() {
+		this.passedLastName = this._routeParams.get("lastName");
 	}
 
 	onAddContact(firstName, lastName, phone, email) {
-		let contact:Contact = {firstName: firstName, lastName: lastName, phoneNumber: phone, emailAddress: email};
+		let contact:Contact = {
+			firstName: firstName,
+			lastName: lastName,
+			phoneNumber: phone,
+			emailAddress: email
+		};
 		this._contactService.insertContact(contact);
 		this._router.navigate(["Contacts"]);
 	}
