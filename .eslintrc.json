@@ -116,7 +116,7 @@
 		"jsx-quotes": 2,
 		"key-spacing": [2, { "beforeColon": false, "afterColon": true }],
 		"keyword-spacing": 2,
-		"linebreak-style": [2, "unix"],
+		"linebreak-style": [1, "windows"],
 		"max-nested-callbacks": [1, 4],
 		"new-cap": [1, { "newIsCap": true, "capIsNew": true }],
 		"new-parens": 2,

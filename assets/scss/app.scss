@@ -9,7 +9,7 @@ body {
 
 .main,
 header nav {
-    width: 70%;
+    width: 80%;
     margin: 30px auto;
 }
 
@@ -20,4 +20,11 @@ header nav a {
     &:active {
         border-bottom: 3px solid $lightblue;
     }
+}
+
+.pipes {
+    margin: 30px 0;
+    padding: 16px;
+    background-color: #eee;
+    border: 1px solid #ccc;
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from "angular2/core";
+import { Router, RouteParams } from "angular2/router";
+
 import { ContactService } from "./contact.service";
 import { Contact } from "./contact";
-import { Router, RouteParams } from "angular2/router";
 
 @Component({
 	template: `
@@ -34,12 +35,11 @@ import { Router, RouteParams } from "angular2/router";
 	styleUrls: ['../assets/css/contact.css']
 })
 export class NewContactComponent {
-
-	newContact: Contact;
+	newContact:Contact;
 
 	constructor(private _contactService:ContactService,
 				private _router:Router,
-				private _routeParams: RouteParams) {
+				private _routeParams:RouteParams) {
 	}
 
 	ngOnInit() {
