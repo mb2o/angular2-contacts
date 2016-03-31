@@ -5,32 +5,37 @@ import { Router, RouteParams } from "angular2/router";
 
 @Component({
 	template: `
-        <div>
+        <form #myform="ngForm" (ngSubmit)="onSubmit()">
             <div class="prop">
                 <label for="firstName">First Name</label> 
-                <input id="firstName" #firstName>
+                <input id="firstName" required #firstName="ngForm"
+                	   ngControl="firstName" [(ngModel)]="newContact.firstName">
+               	<span *ngIf="!firstName.valid">Invalid</span>
             </div>
             <div class="prop">
                 <label for="lastName">Last Name</label>
-                <input id="lastName" #lastName value="{{ passedLastName }}"> 
+                <input id="lastName" required
+                	   ngControl="lastName" [(ngModel)]="newContact.lastName"> 
             </div>
             <div class="prop">
                 <label for="phone">Phone Number</label>
-                <input id="phone" #phone>
+                <input id="phone" required
+                	   ngControl="phone" [(ngModel)]="newContact.phoneNumber">
             </div>
             <div class="prop">
                 <label for="email">Email</label>
-                <input id="email" #email>
+                <input id="email" required
+                	   ngControl="email" [(ngModel)]="newContact.emailAddress">
             </div>
-        </div>
-        <button (click)="onAddContact(firstName.value, lastName.value, phone.value, email.value)">Create</button>
+        	<button type="submit" [disabled]="!myform.form.valid">Create Contact</button>
+        </form>
     `,
 	providers: [ContactService],
 	styleUrls: ['../assets/css/contact.css']
 })
 export class NewContactComponent {
 
-	public passedLastName: string = "";
+	newContact: Contact;
 
 	constructor(private _contactService:ContactService,
 				private _router:Router,
@@ -38,17 +43,16 @@ export class NewContactComponent {
 	}
 
 	ngOnInit() {
-		this.passedLastName = this._routeParams.get("lastName");
+		this.newContact = {
+			firstName: "",
+			lastName: this._routeParams.get("lastName"),
+			phoneNumber: "",
+			emailAddress: ""
+		};
 	}
 
-	onAddContact(firstName, lastName, phone, email) {
-		let contact:Contact = {
-			firstName: firstName,
-			lastName: lastName,
-			phoneNumber: phone,
-			emailAddress: email
-		};
-		this._contactService.insertContact(contact);
+	onSubmit() {
+		this._contactService.insertContact(this.newContact);
 		this._router.navigate(["Contacts"]);
 	}
 }
