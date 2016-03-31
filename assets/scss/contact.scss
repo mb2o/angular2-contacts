@@ -1,0 +1,18 @@
+@import "colors";
+
+label {
+    display: inline-block;
+    width: 140px;
+    color: $darkblue;
+    font-weight: bold;
+}
+
+input {
+    width: 250px;
+    font-size: 16px;
+    padding: .2em .4em;
+}
+
+.prop {
+    margin-bottom: .4em;
+}
